@@ -12,10 +12,10 @@ namespace Spotistat
     {
         public Spotistat()
         {
-            InitializeComponent();
-
             DotNetEnv.Env.Load();
             DotNetEnv.Env.TraversePath().Load();
+
+            InitializeComponent();
         }
         private void Find_Click(object sender, EventArgs e)
         {
@@ -35,7 +35,7 @@ namespace Spotistat
 
             lastsingle.Text = "";
             lastalbum.Text = "";
-            albumsf.Text = "";
+            albums.Text = "";
             genres.Text = "";
             popularity.Text = "";
             followers.Text = "";
@@ -47,7 +47,7 @@ namespace Spotistat
             followers.Location = new Point(120, 125);
 
             lAlbums.Location = new Point(13, 215);
-            albumsf.Location = new Point(120, 215);
+            albums.Location = new Point(120, 215);
 
             lLastalbum.Location = new Point(13, 243);
             lastalbum.Location = new Point(120, 243);
@@ -64,51 +64,85 @@ namespace Spotistat
         public void Movement()
         {
             //---Move albums dowm
-            if (genres.Location.Y + genres.Size.Height > albumsf.Location.Y)
+            if (genres.Location.Y + genres.Size.Height > albums.Location.Y)
             {
-                albumsf.Location = new Point(120, genres.Location.Y + genres.Size.Height + 12);
-                lAlbums.Location = new Point(13, albumsf.Location.Y);
+                albums.Location = new Point(120, genres.Location.Y + genres.Size.Height + 12);
+                lAlbums.Location = new Point(13, albums.Location.Y);
             }
 
-            //---Move last album down
-            if (albumsf.Location.Y + albumsf.Size.Height > lastalbum.Location.Y)
+            //---Move last album and single down
+            if (albums.Location.Y + albums.Size.Height > lastalbum.Location.Y)
             {
-                lastalbum.Location = new Point(120, albumsf.Location.Y + albumsf.Size.Height + 12);
+                lastalbum.Location = new Point(120, albums.Location.Y + albums.Size.Height + 12);
                 lLastalbum.Location = new Point(13, lastalbum.Location.Y);
-            }
-            //---Move last single down
-            if (albumsf.Location.Y + albumsf.Size.Height > lastsingle.Location.Y)
-            {
+
                 lastsingle.Location = new Point(120, lastalbum.Location.Y + lastalbum.Size.Height + 12);
                 lLastsingle.Location = new Point(13, lastsingle.Location.Y);
             }
 
-            //---Move name to down
+            //---Move name (picture) to down
             if (name.Location.Y + name.Size.Height > picture.Location.Y)
             {
                 picture.Location = new Point(475, name.Location.Y + name.Size.Height + 12);
             }
 
             //---Move picture and name to the right
-            if (albumsf.Location.X + albumsf.Size.Width > picture.Location.X || genres.Location.X + genres.Size.Width > picture.Location.X || lastsingle.Location.X + lastsingle.Size.Width > picture.Location.X)
+            if (albums.Location.X + albums.Size.Width > picture.Location.X || genres.Location.X + genres.Size.Width > picture.Location.X || lastsingle.Location.X + lastsingle.Size.Width > picture.Location.X)
             {
-                picture.Location = new Point(albumsf.Location.X + albumsf.Size.Width + 10, 67);
-                name.Location = new Point(albumsf.Location.X + albumsf.Size.Width + 10, 17);
+                picture.Location = new Point(albums.Location.X + albums.Size.Width + 10, 67);
+                name.Location = new Point(albums.Location.X + albums.Size.Width + 10, 17);
 
                 if (name.Location.Y + name.Size.Height > picture.Location.Y)
                 {
-                    picture.Location = new Point(albumsf.Location.X + albumsf.Size.Width + 10, name.Location.Y + name.Size.Height + 12);
+                    picture.Location = new Point(albums.Location.X + albums.Size.Width + 10, name.Location.Y + name.Size.Height + 12);
                 }
             }
         }
         public void Info()
         {
+            string id;
+            //---Text Validation
+            try
+            {
+                string[] parts = UrlBox.Text.Split('/', '?');
+                id = parts[4];
+
+                if (id.Length != 22) //---Checking ID length
+                {
+                    UrlBox.Focus();
+                    errorProvider1.SetError(Find, "Wrong URL!");
+                    return;
+                }
+                else
+                {
+                    errorProvider1.SetError(Find, null);
+                }
+            } catch (IndexOutOfRangeException) //---Cheking deleted parts of URL
+            {
+                UrlBox.Focus(); 
+                errorProvider1.SetError(Find, "Wrong URL!");
+                return;
+            } catch (APIException) //---Some API Exeption
+            {
+                UrlBox.Focus(); 
+                errorProvider1.SetError(Find, "Wrong URL!");
+                return;
+            }
 
             //---Grabbing artist's ID from URL
-            string[] parts = UrlBox.Text.Split('/', '?');
-            string id = parts[4];
-
             var spotify = new SpotifyClient(Token());
+
+            try
+            {
+                spotify.Artists.Get(id).GetAwaiter().GetResult();
+            }
+            catch //---Checking arist's existing
+            {
+                UrlBox.Focus(); 
+                errorProvider1.SetError(Find, "Wrong ID!");
+                return;
+            }
+
             var artist = spotify.Artists.Get(id).GetAwaiter().GetResult();
             var songs = spotify.Artists.GetAlbums(id).GetAwaiter().GetResult();
 
@@ -158,20 +192,31 @@ namespace Spotistat
                     indexS--;
             }
 
-            //---Labels
+            //---Labels filling
             name.Text = artist.Name;
             followers.Text = artist.Followers.Total.ToString();
-            genres.Text = artist.Genres.Count > 0 ? genres.Text = string.Join("\r", artist.Genres) : "no genres...";
             popularity.Text = artist.Popularity.ToString();
+
             picture.Visible = true;
-            picture.ImageLocation = artist.Images[1].Url;
+
+            //---Picture filling
+            if (artist.Images.Count != 0)
+            {
+                picture.ImageLocation = artist.Images[1].Url;
+            }
+            else
+            {
+                picture.Image = Properties.Resources.noimage;
+            }
+
             name.Visible = true;
 
-            albumsf.Text = albumsName.Count > 0 ? albumsf.Text = '\u25BA' + " " + string.Join("\r" + '\u25BA' + " ", albumsName) : "no albums...";
+            genres.Text = artist.Genres.Count > 0 ? genres.Text = string.Join("\r", artist.Genres) : "no genres...";
+            albums.Text = albumsName.Count > 0 ? albums.Text = '\u25BA' + " " + string.Join("\r" + '\u25BA' + " ", albumsName) : "no albums...";
             lastalbum.Text = albumsName.Count > 0 ? '\u25BA' + " " + albumsName[0] : "no albums...";
             lastsingle.Text = singlesName.Count > 0 ? '\u2022' + singlesName[0] : "no singles...";
 
-            Movement();
+            Movement();            
         }
         public string Token()
         {
@@ -208,6 +253,7 @@ namespace Spotistat
             UrlBox.ForeColor = Color.Gray;
             UrlBox.Font = new Font(UrlBox.Font, FontStyle.Italic);
             UrlBox.Text = "URL of artist...";
+            errorProvider1.SetError(Find, null);
         }
         private void UrlBox_Leave(object sender, EventArgs e)
         {

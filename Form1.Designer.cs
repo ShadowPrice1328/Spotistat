@@ -29,6 +29,7 @@ namespace Spotistat
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.UrlBox = new System.Windows.Forms.TextBox();
             this.name = new System.Windows.Forms.Label();
             this.Find = new System.Windows.Forms.Button();
@@ -41,12 +42,14 @@ namespace Spotistat
             this.followers = new System.Windows.Forms.Label();
             this.picture = new System.Windows.Forms.PictureBox();
             this.lAlbums = new System.Windows.Forms.Label();
-            this.albumsf = new System.Windows.Forms.Label();
+            this.albums = new System.Windows.Forms.Label();
             this.lLastalbum = new System.Windows.Forms.Label();
             this.lastalbum = new System.Windows.Forms.Label();
             this.lLastsingle = new System.Windows.Forms.Label();
             this.lastsingle = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // UrlBox
@@ -176,16 +179,16 @@ namespace Spotistat
             this.lAlbums.TabIndex = 12;
             this.lAlbums.Text = "Albums:";
             // 
-            // albumsf
+            // albums
             // 
-            this.albumsf.AutoSize = true;
-            this.albumsf.BackColor = System.Drawing.SystemColors.Menu;
-            this.albumsf.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.albumsf.Location = new System.Drawing.Point(119, 215);
-            this.albumsf.MaximumSize = new System.Drawing.Size(450, 0);
-            this.albumsf.Name = "albumsf";
-            this.albumsf.Size = new System.Drawing.Size(0, 22);
-            this.albumsf.TabIndex = 13;
+            this.albums.AutoSize = true;
+            this.albums.BackColor = System.Drawing.SystemColors.Menu;
+            this.albums.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.albums.Location = new System.Drawing.Point(119, 215);
+            this.albums.MaximumSize = new System.Drawing.Size(450, 0);
+            this.albums.Name = "albums";
+            this.albums.Size = new System.Drawing.Size(0, 22);
+            this.albums.TabIndex = 13;
             // 
             // lLastalbum
             // 
@@ -229,17 +232,21 @@ namespace Spotistat
             this.lastsingle.Size = new System.Drawing.Size(0, 22);
             this.lastsingle.TabIndex = 17;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // Spotistat
             // 
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(637, 294);
+            this.ClientSize = new System.Drawing.Size(646, 304);
             this.Controls.Add(this.lastsingle);
             this.Controls.Add(this.lLastsingle);
             this.Controls.Add(this.lastalbum);
             this.Controls.Add(this.lLastalbum);
-            this.Controls.Add(this.albumsf);
+            this.Controls.Add(this.albums);
             this.Controls.Add(this.lAlbums);
             this.Controls.Add(this.picture);
             this.Controls.Add(this.followers);
@@ -258,6 +265,7 @@ namespace Spotistat
             this.Text = "Spotistat";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.picture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,11 +285,12 @@ namespace Spotistat
         private System.Windows.Forms.Label followers;
         private System.Windows.Forms.PictureBox picture;
         private System.Windows.Forms.Label lAlbums;
-        private System.Windows.Forms.Label albumsf;
+        private System.Windows.Forms.Label albums;
         private System.Windows.Forms.Label lLastalbum;
         private System.Windows.Forms.Label lastalbum;
         private System.Windows.Forms.Label lLastsingle;
         private System.Windows.Forms.Label lastsingle;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
