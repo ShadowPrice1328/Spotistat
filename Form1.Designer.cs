@@ -48,8 +48,15 @@ namespace Spotistat
             this.lLastsingle = new System.Windows.Forms.Label();
             this.lastsingle = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.Save = new System.Windows.Forms.Button();
+            this.templateBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.listbox = new System.Windows.Forms.ComboBox();
+            this.templateBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.Delete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // UrlBox
@@ -61,6 +68,7 @@ namespace Spotistat
             this.UrlBox.Name = "UrlBox";
             this.UrlBox.Size = new System.Drawing.Size(441, 56);
             this.UrlBox.TabIndex = 0;
+            this.UrlBox.TextChanged += new System.EventHandler(this.UrlBox_TextChanged);
             this.UrlBox.Enter += new System.EventHandler(this.UrlBox_Enter);
             this.UrlBox.Leave += new System.EventHandler(this.UrlBox_Leave);
             // 
@@ -90,10 +98,11 @@ namespace Spotistat
             // 
             // Clear
             // 
+            this.Clear.AutoSize = true;
             this.Clear.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Clear.Location = new System.Drawing.Point(371, 74);
+            this.Clear.Location = new System.Drawing.Point(394, 38);
             this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(82, 33);
+            this.Clear.Size = new System.Drawing.Size(59, 30);
             this.Clear.TabIndex = 3;
             this.Clear.Text = "Clear";
             this.Clear.UseVisualStyleBackColor = true;
@@ -236,12 +245,52 @@ namespace Spotistat
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // Save
+            // 
+            this.Save.AutoSize = true;
+            this.Save.Enabled = false;
+            this.Save.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Save.Location = new System.Drawing.Point(312, 111);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(56, 33);
+            this.Save.TabIndex = 18;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // listbox
+            // 
+            this.listbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.listbox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listbox.FormattingEnabled = true;
+            this.listbox.ItemHeight = 21;
+            this.listbox.Location = new System.Drawing.Point(312, 76);
+            this.listbox.Name = "listbox";
+            this.listbox.Size = new System.Drawing.Size(141, 29);
+            this.listbox.TabIndex = 19;
+            this.listbox.SelectedIndexChanged += new System.EventHandler(this.listbox_SelectedIndexChanged);
+            // 
+            // Delete
+            // 
+            this.Delete.Enabled = false;
+            this.Delete.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Delete.Location = new System.Drawing.Point(374, 111);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(79, 33);
+            this.Delete.TabIndex = 20;
+            this.Delete.Text = "Delete";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
             // Spotistat
             // 
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(646, 304);
+            this.Controls.Add(this.Delete);
+            this.Controls.Add(this.listbox);
+            this.Controls.Add(this.Save);
             this.Controls.Add(this.lastsingle);
             this.Controls.Add(this.lLastsingle);
             this.Controls.Add(this.lastalbum);
@@ -266,6 +315,8 @@ namespace Spotistat
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.picture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,6 +342,11 @@ namespace Spotistat
         private System.Windows.Forms.Label lLastsingle;
         private System.Windows.Forms.Label lastsingle;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.BindingSource templateBindingSource;
+        private System.Windows.Forms.ComboBox listbox;
+        private System.Windows.Forms.BindingSource templateBindingSource1;
+        private System.Windows.Forms.Button Delete;
     }
 }
 
