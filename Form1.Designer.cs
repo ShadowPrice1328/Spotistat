@@ -30,6 +30,7 @@ namespace Spotistat
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Spotistat));
             this.UrlBox = new System.Windows.Forms.TextBox();
             this.name = new System.Windows.Forms.Label();
             this.Find = new System.Windows.Forms.Button();
@@ -308,6 +309,7 @@ namespace Spotistat
             this.Controls.Add(this.name);
             this.Controls.Add(this.Find);
             this.Controls.Add(this.UrlBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Spotistat";
             this.Padding = new System.Windows.Forms.Padding(5);
