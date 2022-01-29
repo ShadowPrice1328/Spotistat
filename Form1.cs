@@ -157,50 +157,24 @@ namespace Spotistat
             var songs = spotify.Artists.GetAlbums(id).GetAwaiter().GetResult();
 
             //---Parsing albums and singles
-            List<string> albumsName = new List<string>();
-            List<string> singlesName = new List<string>();
+            List<string> albums = new List<string>();
+            List<string> singles = new List<string>();
 
             for (int i = 0; i < songs.Items.Count; i++) //division into types
             {
                 if (songs.Items[i].AlbumGroup == "album")
                 {
-                    albumsName.Add(songs.Items[i].Name);
+                    albums.Add(songs.Items[i].Name);
                 }
                 if (songs.Items[i].AlbumGroup == "single")
                 {
-                    singlesName.Add(songs.Items[i].Name);
+                    singles.Add(songs.Items[i].Name);
                 }
             }
 
             //---Checking identical names
-            int indexA = albumsName.Count - 1;
-            int indexS = singlesName.Count - 1;
-
-            while (indexA > 0) //albums
-            {
-                if (albumsName[indexA].ToLower() == albumsName[indexA - 1].ToLower())
-                {
-                    if (indexA < albumsName.Count - 1)
-                        (albumsName[indexA], albumsName[albumsName.Count - 1]) = (albumsName[albumsName.Count - 1], albumsName[indexA]);
-                    albumsName.RemoveAt(albumsName.Count - 1);
-                    indexA--;
-                }
-                else
-                    indexA--;
-            }
-
-            while (indexS > 0) //singles
-            {
-                if (singlesName[indexS].ToLower() == singlesName[indexS - 1].ToLower())
-                {
-                    if (indexS < singlesName.Count - 1)
-                        (singlesName[indexS], singlesName[singlesName.Count - 1]) = (singlesName[singlesName.Count - 1], singlesName[indexS]);
-                    singlesName.RemoveAt(singlesName.Count - 1);
-                    indexS--;
-                }
-                else
-                    indexS--;
-            }
+            albums = albums.GroupBy(x => x.ToLower()).Select(y => y.First()).ToList();
+            singles = singles.GroupBy(x => x.ToLower()).Select(y => y.First()).ToList();
 
             //---Labels filling
             name.Text = artist.Name;
@@ -223,9 +197,9 @@ namespace Spotistat
 
             //---Filling info from lists
             genres.Text = artist.Genres.Count > 0 ? genres.Text = string.Join("\r", artist.Genres) : "no genres...";
-            albums.Text = albumsName.Count > 0 ? albums.Text = '\u25BA' + " " + string.Join("\r" + '\u25BA' + " ", albumsName) : "no albums...";
-            lastalbum.Text = albumsName.Count > 0 ? '\u25BA' + " " + albumsName[0] : "no albums...";
-            lastsingle.Text = singlesName.Count > 0 ? '\u2022' + singlesName[0] : "no singles...";
+            this.albums.Text = albums.Count > 0 ? this.albums.Text = '\u25BA' + " " + string.Join("\r" + '\u25BA' + " ", albums) : "no albums...";
+            lastalbum.Text = albums.Count > 0 ? '\u25BA' + " " + albums[0] : "no albums...";
+            lastsingle.Text = singles.Count > 0 ? '\u2022' + singles[0] : "no singles...";
 
             Movement();            
         }
@@ -263,7 +237,8 @@ namespace Spotistat
             DotNetEnv.Env.Load(); //loading all enviromental values
             DotNetEnv.Env.TraversePath().Load(); //...from all directories of project
 
-            string refresh_token = Environment.GetEnvironmentVariable("REFRESH_TOKEN");
+            //DON'T CHANGE
+            string refresh_token = "AQD0d8TVAJfpVYX0PivC11GAxs0BWiDjvjGlG5b5m_FB4DdZsaHgUGLYLezLfKGzuZ3UmMjSXppS1gOEWnnTKjBJk4BCT1gAAIH0ZdtEeXV6sUxiYQ1fdheNBQEk5BB5fd8"; 
             string base64 = Environment.GetEnvironmentVariable("BASE64");
 
             //---POST request
@@ -365,13 +340,15 @@ namespace Spotistat
         }
         private void Delete_Click(object sender, EventArgs e)
         {
+            string selectedName = listbox.GetItemText(listbox.SelectedItem);
+
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\templates.json";
 
             List<Template> templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
 
             foreach (Template template in templates.ToList()) //looking for needed artist
             {
-                if (template.name == listbox.GetItemText(listbox.SelectedItem))
+                if (template.name == selectedName)
                 {
                     templates.Remove(template);
                     listbox.Items.Remove(listbox.GetItemText(listbox.SelectedItem));
@@ -398,6 +375,5 @@ namespace Spotistat
                 this.name = name;
             }
         }
-
     }
 }
