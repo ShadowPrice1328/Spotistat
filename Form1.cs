@@ -19,8 +19,19 @@ namespace Spotistat
         }
         private void Find_Click(object sender, EventArgs e)
         {
-            string[] parts = UrlBox.Text.Split('/', '?');
-            string id = parts[4];
+            string id;
+            try
+            {
+                string[] parts = UrlBox.Text.Split('/', '?');
+                id = parts[4];
+            }
+            catch
+            {
+                UrlBox.Focus();
+                errorProvider1.SetError(Find, "Wrong URL!");
+                Save.Enabled = false;
+                return;
+            }
 
             Info(id);
 
@@ -95,16 +106,21 @@ namespace Spotistat
                 picture.Location = new Point(475, name.Location.Y + name.Size.Height + 12);
             }
 
-            //---Move picture and name to the right
-            if (albums.Location.X + albums.Size.Width > picture.Location.X || genres.Location.X + genres.Size.Width > picture.Location.X || lastsingle.Location.X + lastsingle.Size.Width > picture.Location.X)
-            {
-                picture.Location = new Point(albums.Location.X + albums.Size.Width + 10, 67);
-                name.Location = new Point(albums.Location.X + albums.Size.Width + 10, 17);
 
-                if (name.Location.Y + name.Size.Height > picture.Location.Y)
-                {
-                    picture.Location = new Point(albums.Location.X + albums.Size.Width + 10, name.Location.Y + name.Size.Height + 12);
-                }
+            //---Move picture and name to the right
+            int pictureStartPos = 475;
+
+            if (lastsingle.Location.X + lastsingle.Size.Width > pictureStartPos) pictureStartPos = lastsingle.Location.X + lastsingle.Size.Width + 10;
+            if (albums.Location.X + albums.Size.Width > pictureStartPos) pictureStartPos = albums.Location.X + albums.Size.Width + 10;
+            if (genres.Location.X + genres.Size.Width > pictureStartPos) pictureStartPos = genres.Location.X + genres.Size.Width + 10;
+
+
+            picture.Location = new Point(pictureStartPos, 67);
+            name.Location = new Point(pictureStartPos, 17);
+
+            if (name.Location.Y + name.Size.Height > picture.Location.Y)
+            {
+                picture.Location = new Point(pictureStartPos, name.Location.Y + name.Size.Height + 12);
             }
         }
         public void Info(string id)
@@ -112,47 +128,9 @@ namespace Spotistat
             //------Showing all info about artist
 
             Default();
-
-            //---Text Validation
-            var spotify = new SpotifyClient(Token());
-
-            try
-            {
-                if (id.Length != 22) //checking ID length
-                {
-                    UrlBox.Focus();
-                    errorProvider1.SetError(Find, "Wrong URL!");
-                    Save.Enabled = false;
-                    return;
-                }
-            } catch (IndexOutOfRangeException) //cheking deleted parts of the URL
-            {
-                UrlBox.Focus(); 
-                errorProvider1.SetError(Find, "Wrong URL!");
-                Save.Enabled = false;
-                return;
-            } catch (APIException) //some API Exeption
-            {
-                UrlBox.Focus(); 
-                errorProvider1.SetError(Find, "Wrong URL!");
-                Save.Enabled = false;
-                return;
-            }
-
-            try
-            {
-                spotify.Artists.Get(id).GetAwaiter().GetResult();
-            }
-            catch //checking artist's existing
-            {
-                UrlBox.Focus(); 
-                errorProvider1.SetError(Find, "Wrong ID!");
-                Save.Enabled = false;
-                return;
-            }
-
             errorProvider1.SetError(Find, null);
 
+            var spotify = new SpotifyClient(Token());
             var artist = spotify.Artists.Get(id).GetAwaiter().GetResult();
             var songs = spotify.Artists.GetAlbums(id).GetAwaiter().GetResult();
 
@@ -190,7 +168,7 @@ namespace Spotistat
             }
             else //if there's no image
             {
-                picture.Image = Properties.Resources.noimage; 
+                picture.Image = Properties.Resources.noimage;
             }
 
             name.Visible = true;
@@ -201,7 +179,7 @@ namespace Spotistat
             lastalbum.Text = albums.Count > 0 ? '\u25BA' + " " + albums[0] : "no albums...";
             lastsingle.Text = singles.Count > 0 ? '\u2022' + singles[0] : "no singles...";
 
-            Movement();            
+            Movement();
         }
         public void TemplatesToList()
         {
@@ -210,14 +188,12 @@ namespace Spotistat
 
             List<Template> templates = new List<Template>();
 
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
-                templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
+                File.Create(path);
             }
-            else
-            {
-                listbox.Enabled = false;
-            }
+
+            templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
 
             if (templates != null) //if file is not empty
             {
@@ -238,8 +214,10 @@ namespace Spotistat
             DotNetEnv.Env.TraversePath().Load(); //...from all directories of project
 
             //DON'T CHANGE
-            string refresh_token = "AQD0d8TVAJfpVYX0PivC11GAxs0BWiDjvjGlG5b5m_FB4DdZsaHgUGLYLezLfKGzuZ3UmMjSXppS1gOEWnnTKjBJk4BCT1gAAIH0ZdtEeXV6sUxiYQ1fdheNBQEk5BB5fd8"; 
-            string base64 = Environment.GetEnvironmentVariable("BASE64");
+
+            Token token = new Token();
+            string refresh_token = "AQD0d8TVAJfpVYX0PivC11GAxs0BWiDjvjGlG5b5m_FB4DdZsaHgUGLYLezLfKGzuZ3UmMjSXppS1gOEWnnTKjBJk4BCT1gAAIH0ZdtEeXV6sUxiYQ1fdheNBQEk5BB5fd8";
+            string base64 = token.token; //<--PASTE THERE YOUR TOKEN INSTEAD OF token.token
 
             //---POST request
             HttpClient client = new HttpClient();
@@ -254,7 +232,7 @@ namespace Spotistat
 
             var content = new FormUrlEncodedContent(values);
             var response = client.PostAsync(link, content).GetAwaiter().GetResult();
-            var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult(); 
+            var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             User user = JsonConvert.DeserializeObject<User>(responseString);
 
