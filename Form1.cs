@@ -42,17 +42,18 @@ namespace Spotistat
         public void Default()
         {
             //---Default locations and values of elements
-            lastalbum.Visible = true;
-            lLastsingle.Visible = true;
-            lastsingle.Visible = true;
+
+            lastAlbum.Visible = true;
+            lLastSingle.Visible = true;
+            lastSingle.Visible = true;
 
             picture.Visible = false;
             picture.Image = null;
 
             name.Visible = false;
 
-            lastsingle.Text = "";
-            lastalbum.Text = "";
+            lastSingle.Text = "";
+            lastAlbum.Text = "";
             albums.Text = "";
             genres.Text = "";
             popularity.Text = "";
@@ -67,11 +68,11 @@ namespace Spotistat
             lAlbums.Location = new Point(13, 215);
             albums.Location = new Point(120, 215);
 
-            lLastalbum.Location = new Point(13, 243);
-            lastalbum.Location = new Point(120, 243);
+            lLastAlbum.Location = new Point(13, 243);
+            lastAlbum.Location = new Point(120, 243);
 
-            lLastsingle.Location = new Point(13, 271);
-            lastsingle.Location = new Point(120, 271);
+            lLastSingle.Location = new Point(13, 271);
+            lastSingle.Location = new Point(120, 271);
 
             lGenres.Location = new Point(13, 187);
             genres.Location = new Point(120, 187);
@@ -81,8 +82,6 @@ namespace Spotistat
         }
         public void Movement()
         {
-            //------I have no desire to comment on this.
-
             //---Move albums dowm
             if (genres.Location.Y + genres.Size.Height > albums.Location.Y)
             {
@@ -91,13 +90,13 @@ namespace Spotistat
             }
 
             //---Move last album and single down
-            if (albums.Location.Y + albums.Size.Height > lastalbum.Location.Y)
+            if (albums.Location.Y + albums.Size.Height > lastAlbum.Location.Y)
             {
-                lastalbum.Location = new Point(120, albums.Location.Y + albums.Size.Height + 12);
-                lLastalbum.Location = new Point(13, lastalbum.Location.Y);
+                lastAlbum.Location = new Point(120, albums.Location.Y + albums.Size.Height + 12);
+                lLastAlbum.Location = new Point(13, lastAlbum.Location.Y);
 
-                lastsingle.Location = new Point(120, lastalbum.Location.Y + lastalbum.Size.Height + 12);
-                lLastsingle.Location = new Point(13, lastsingle.Location.Y);
+                lastSingle.Location = new Point(120, lastAlbum.Location.Y + lastAlbum.Size.Height + 12);
+                lLastSingle.Location = new Point(13, lastSingle.Location.Y);
             }
 
             //---Move name (picture) to down
@@ -110,7 +109,7 @@ namespace Spotistat
             //---Move picture and name to the right
             int pictureStartPos = 475;
 
-            if (lastsingle.Location.X + lastsingle.Size.Width > pictureStartPos) pictureStartPos = lastsingle.Location.X + lastsingle.Size.Width + 10;
+            if (lastSingle.Location.X + lastSingle.Size.Width > pictureStartPos) pictureStartPos = lastSingle.Location.X + lastSingle.Size.Width + 10;
             if (albums.Location.X + albums.Size.Width > pictureStartPos) pictureStartPos = albums.Location.X + albums.Size.Width + 10;
             if (genres.Location.X + genres.Size.Width > pictureStartPos) pictureStartPos = genres.Location.X + genres.Size.Width + 10;
 
@@ -176,15 +175,15 @@ namespace Spotistat
             //---Filling info from lists
             genres.Text = artist.Genres.Count > 0 ? genres.Text = string.Join("\r", artist.Genres) : "no genres...";
             this.albums.Text = albums.Count > 0 ? this.albums.Text = '\u25BA' + " " + string.Join("\r" + '\u25BA' + " ", albums) : "no albums...";
-            lastalbum.Text = albums.Count > 0 ? '\u25BA' + " " + albums[0] : "no albums...";
-            lastsingle.Text = singles.Count > 0 ? '\u2022' + singles[0] : "no singles...";
+            lastAlbum.Text = albums.Count > 0 ? '\u25BA' + " " + albums[0] : "no albums...";
+            lastSingle.Text = singles.Count > 0 ? '\u2022' + singles[0] : "no singles...";
 
             Movement();
         }
         public void TemplatesToList()
         {
             //---Parsing all templates to ComboBox
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\templates.json";
+            string path = Directory.GetCurrentDirectory() + "\\templates.json";
 
             List<Template> templates = new List<Template>();
 
@@ -192,16 +191,18 @@ namespace Spotistat
             {
                 File.Create(path);
             }
-
-            templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
-
-            if (templates != null) //if file is not empty
+            else
             {
-                foreach (Template template in templates) //check every template
+                templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
+
+                if (templates != null) //if file is not empty
                 {
-                    if (!listbox.Items.Contains(template.name)) //don't add if there's duplicate
+                    foreach (Template template in templates) //check every template
                     {
-                        listbox.Items.Add(template.name);
+                        if (!listbox.Items.Contains(template.name)) //don't add if there's duplicate
+                        {
+                            listbox.Items.Add(template.name);
+                        }
                     }
                 }
             }
@@ -209,12 +210,6 @@ namespace Spotistat
         public string Token()
         {
             //---Grabbing a token
-
-            DotNetEnv.Env.Load(); //loading all enviromental values
-            DotNetEnv.Env.TraversePath().Load(); //...from all directories of project
-
-            //DON'T CHANGE
-
             Token token = new Token();
             string refresh_token = "AQD0d8TVAJfpVYX0PivC11GAxs0BWiDjvjGlG5b5m_FB4DdZsaHgUGLYLezLfKGzuZ3UmMjSXppS1gOEWnnTKjBJk4BCT1gAAIH0ZdtEeXV6sUxiYQ1fdheNBQEk5BB5fd8";
             string base64 = token.token; //<--PASTE THERE YOUR TOKEN INSTEAD OF token.token
@@ -277,7 +272,7 @@ namespace Spotistat
             string[] parts = UrlBox.Text.Split('/', '?');
             string id = parts[4];
 
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\templates.json";
+            string path = Directory.GetCurrentDirectory() + "\\templates.json";
 
             List<Template> templates = new List<Template>();
 
@@ -302,7 +297,7 @@ namespace Spotistat
         {
             string selectedName = listbox.GetItemText(listbox.SelectedItem);
 
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\templates.json";
+            string path = Directory.GetCurrentDirectory() + "\\templates.json";
 
             List<Template> templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
 
@@ -320,7 +315,7 @@ namespace Spotistat
         {
             string selectedName = listbox.GetItemText(listbox.SelectedItem);
 
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\templates.json";
+            string path = Directory.GetCurrentDirectory() + "\\templates.json";
 
             List<Template> templates = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText(path)); //reading and converting text to set of templates
 

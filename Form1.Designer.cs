@@ -32,7 +32,6 @@ namespace Spotistat
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Spotistat));
             this.UrlBox = new System.Windows.Forms.TextBox();
-            this.name = new System.Windows.Forms.Label();
             this.Find = new System.Windows.Forms.Button();
             this.Clear = new System.Windows.Forms.Button();
             this.lFollowers = new System.Windows.Forms.Label();
@@ -41,23 +40,24 @@ namespace Spotistat
             this.genres = new System.Windows.Forms.Label();
             this.popularity = new System.Windows.Forms.Label();
             this.followers = new System.Windows.Forms.Label();
-            this.picture = new System.Windows.Forms.PictureBox();
             this.lAlbums = new System.Windows.Forms.Label();
             this.albums = new System.Windows.Forms.Label();
-            this.lLastalbum = new System.Windows.Forms.Label();
-            this.lastalbum = new System.Windows.Forms.Label();
-            this.lLastsingle = new System.Windows.Forms.Label();
-            this.lastsingle = new System.Windows.Forms.Label();
+            this.lLastAlbum = new System.Windows.Forms.Label();
+            this.lastAlbum = new System.Windows.Forms.Label();
+            this.lLastSingle = new System.Windows.Forms.Label();
+            this.lastSingle = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.Save = new System.Windows.Forms.Button();
             this.templateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listbox = new System.Windows.Forms.ComboBox();
             this.templateBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.Delete = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picture)).BeginInit();
+            this.picture = new System.Windows.Forms.PictureBox();
+            this.name = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture)).BeginInit();
             this.SuspendLayout();
             // 
             // UrlBox
@@ -72,19 +72,6 @@ namespace Spotistat
             this.UrlBox.TextChanged += new System.EventHandler(this.UrlBox_TextChanged);
             this.UrlBox.Enter += new System.EventHandler(this.UrlBox_Enter);
             this.UrlBox.Leave += new System.EventHandler(this.UrlBox_Leave);
-            // 
-            // name
-            // 
-            this.name.AutoSize = true;
-            this.name.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.name.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.name.Location = new System.Drawing.Point(475, 17);
-            this.name.MaximumSize = new System.Drawing.Size(304, 0);
-            this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(79, 34);
-            this.name.TabIndex = 1;
-            this.name.Text = "Artist";
-            this.name.Visible = false;
             // 
             // Find
             // 
@@ -168,17 +155,6 @@ namespace Spotistat
             this.followers.Size = new System.Drawing.Size(0, 22);
             this.followers.TabIndex = 10;
             // 
-            // picture
-            // 
-            this.picture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picture.Location = new System.Drawing.Point(475, 67);
-            this.picture.Name = "picture";
-            this.picture.Size = new System.Drawing.Size(155, 154);
-            this.picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picture.TabIndex = 11;
-            this.picture.TabStop = false;
-            this.picture.Visible = false;
-            // 
             // lAlbums
             // 
             this.lAlbums.AutoSize = true;
@@ -200,47 +176,47 @@ namespace Spotistat
             this.albums.Size = new System.Drawing.Size(0, 22);
             this.albums.TabIndex = 13;
             // 
-            // lLastalbum
+            // lLastAlbum
             // 
-            this.lLastalbum.AutoSize = true;
-            this.lLastalbum.Font = new System.Drawing.Font("Century Gothic", 14.25F);
-            this.lLastalbum.Location = new System.Drawing.Point(13, 243);
-            this.lLastalbum.Name = "lLastalbum";
-            this.lLastalbum.Size = new System.Drawing.Size(119, 22);
-            this.lLastalbum.TabIndex = 14;
-            this.lLastalbum.Text = "Last album: ";
+            this.lLastAlbum.AutoSize = true;
+            this.lLastAlbum.Font = new System.Drawing.Font("Century Gothic", 14.25F);
+            this.lLastAlbum.Location = new System.Drawing.Point(13, 243);
+            this.lLastAlbum.Name = "lLastAlbum";
+            this.lLastAlbum.Size = new System.Drawing.Size(119, 22);
+            this.lLastAlbum.TabIndex = 14;
+            this.lLastAlbum.Text = "Last album: ";
             // 
-            // lastalbum
+            // lastAlbum
             // 
-            this.lastalbum.AutoSize = true;
-            this.lastalbum.BackColor = System.Drawing.SystemColors.Menu;
-            this.lastalbum.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lastalbum.Location = new System.Drawing.Point(119, 243);
-            this.lastalbum.MaximumSize = new System.Drawing.Size(450, 0);
-            this.lastalbum.Name = "lastalbum";
-            this.lastalbum.Size = new System.Drawing.Size(0, 22);
-            this.lastalbum.TabIndex = 15;
+            this.lastAlbum.AutoSize = true;
+            this.lastAlbum.BackColor = System.Drawing.SystemColors.Menu;
+            this.lastAlbum.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lastAlbum.Location = new System.Drawing.Point(119, 243);
+            this.lastAlbum.MaximumSize = new System.Drawing.Size(450, 0);
+            this.lastAlbum.Name = "lastAlbum";
+            this.lastAlbum.Size = new System.Drawing.Size(0, 22);
+            this.lastAlbum.TabIndex = 15;
             // 
-            // lLastsingle
+            // lLastSingle
             // 
-            this.lLastsingle.AutoSize = true;
-            this.lLastsingle.Font = new System.Drawing.Font("Century Gothic", 14.25F);
-            this.lLastsingle.Location = new System.Drawing.Point(13, 271);
-            this.lLastsingle.Name = "lLastsingle";
-            this.lLastsingle.Size = new System.Drawing.Size(111, 22);
-            this.lLastsingle.TabIndex = 16;
-            this.lLastsingle.Text = "Last single: ";
+            this.lLastSingle.AutoSize = true;
+            this.lLastSingle.Font = new System.Drawing.Font("Century Gothic", 14.25F);
+            this.lLastSingle.Location = new System.Drawing.Point(13, 271);
+            this.lLastSingle.Name = "lLastSingle";
+            this.lLastSingle.Size = new System.Drawing.Size(111, 22);
+            this.lLastSingle.TabIndex = 16;
+            this.lLastSingle.Text = "Last single: ";
             // 
-            // lastsingle
+            // lastSingle
             // 
-            this.lastsingle.AutoSize = true;
-            this.lastsingle.BackColor = System.Drawing.SystemColors.Menu;
-            this.lastsingle.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lastsingle.Location = new System.Drawing.Point(119, 271);
-            this.lastsingle.MaximumSize = new System.Drawing.Size(450, 0);
-            this.lastsingle.Name = "lastsingle";
-            this.lastsingle.Size = new System.Drawing.Size(0, 22);
-            this.lastsingle.TabIndex = 17;
+            this.lastSingle.AutoSize = true;
+            this.lastSingle.BackColor = System.Drawing.SystemColors.Menu;
+            this.lastSingle.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lastSingle.Location = new System.Drawing.Point(119, 271);
+            this.lastSingle.MaximumSize = new System.Drawing.Size(450, 0);
+            this.lastSingle.Name = "lastSingle";
+            this.lastSingle.Size = new System.Drawing.Size(0, 22);
+            this.lastSingle.TabIndex = 17;
             // 
             // errorProvider1
             // 
@@ -283,22 +259,47 @@ namespace Spotistat
             this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
             // 
+            // picture
+            // 
+            this.picture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picture.Location = new System.Drawing.Point(475, 67);
+            this.picture.Name = "picture";
+            this.picture.Size = new System.Drawing.Size(155, 154);
+            this.picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.picture.TabIndex = 11;
+            this.picture.TabStop = false;
+            this.picture.Visible = false;
+            // 
+            // name
+            // 
+            this.name.AutoSize = true;
+            this.name.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.name.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.name.Location = new System.Drawing.Point(475, 17);
+            this.name.MaximumSize = new System.Drawing.Size(304, 0);
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(79, 34);
+            this.name.TabIndex = 1;
+            this.name.Text = "Artist";
+            this.name.Visible = false;
+            // 
             // Spotistat
             // 
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(646, 304);
+            this.Controls.Add(this.picture);
+            this.Controls.Add(this.name);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.listbox);
             this.Controls.Add(this.Save);
-            this.Controls.Add(this.lastsingle);
-            this.Controls.Add(this.lLastsingle);
-            this.Controls.Add(this.lastalbum);
-            this.Controls.Add(this.lLastalbum);
+            this.Controls.Add(this.lastSingle);
+            this.Controls.Add(this.lLastSingle);
+            this.Controls.Add(this.lastAlbum);
+            this.Controls.Add(this.lLastAlbum);
             this.Controls.Add(this.albums);
             this.Controls.Add(this.lAlbums);
-            this.Controls.Add(this.picture);
             this.Controls.Add(this.followers);
             this.Controls.Add(this.popularity);
             this.Controls.Add(this.genres);
@@ -306,7 +307,6 @@ namespace Spotistat
             this.Controls.Add(this.lGenres);
             this.Controls.Add(this.lFollowers);
             this.Controls.Add(this.Clear);
-            this.Controls.Add(this.name);
             this.Controls.Add(this.Find);
             this.Controls.Add(this.UrlBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -315,10 +315,10 @@ namespace Spotistat
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Spotistat";
             this.TopMost = true;
-            ((System.ComponentModel.ISupportInitialize)(this.picture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.templateBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,7 +327,6 @@ namespace Spotistat
         #endregion
 
         private System.Windows.Forms.TextBox UrlBox;
-        private System.Windows.Forms.Label name;
         private System.Windows.Forms.Button Find;
         private System.Windows.Forms.Button Clear;
         private System.Windows.Forms.Label lFollowers;
@@ -336,19 +335,20 @@ namespace Spotistat
         private System.Windows.Forms.Label genres;
         private System.Windows.Forms.Label popularity;
         private System.Windows.Forms.Label followers;
-        private System.Windows.Forms.PictureBox picture;
         private System.Windows.Forms.Label lAlbums;
         private System.Windows.Forms.Label albums;
-        private System.Windows.Forms.Label lLastalbum;
-        private System.Windows.Forms.Label lastalbum;
-        private System.Windows.Forms.Label lLastsingle;
-        private System.Windows.Forms.Label lastsingle;
+        private System.Windows.Forms.Label lLastAlbum;
+        private System.Windows.Forms.Label lastAlbum;
+        private System.Windows.Forms.Label lLastSingle;
+        private System.Windows.Forms.Label lastSingle;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.BindingSource templateBindingSource;
         private System.Windows.Forms.ComboBox listbox;
         private System.Windows.Forms.BindingSource templateBindingSource1;
         private System.Windows.Forms.Button Delete;
+        private System.Windows.Forms.Label name;
+        private System.Windows.Forms.PictureBox picture;
     }
 }
 
