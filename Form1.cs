@@ -197,7 +197,7 @@ namespace Spotistat
 
                     path = Properties.Settings.Default.path;
                 }
-                else Close();
+                else Environment.Exit(1);
 
                 File.Create(path);
             }
