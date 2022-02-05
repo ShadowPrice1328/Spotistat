@@ -197,7 +197,7 @@ namespace Spotistat
 
                     path = Properties.Settings.Default.path;
                 }
-                else Close();
+                else Environment.Exit(1);
 
                 File.Create(path);
             }
@@ -209,7 +209,7 @@ namespace Spotistat
 
                 //Don't add the same artist
 
-                if (templates.Count != 0)
+                if (templates != null && templates.Count != 0 )
                 {
                     listbox.Enabled = true;
 
