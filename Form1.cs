@@ -200,6 +200,7 @@ namespace Spotistat
                 else Environment.Exit(1);
 
                 File.Create(path);
+                File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Hidden);
             }
             else
             {
@@ -309,9 +310,12 @@ namespace Spotistat
 
             //Saving the templates
 
-            string json = JsonConvert.SerializeObject(templates, Formatting.Indented); 
+            string json = JsonConvert.SerializeObject(templates, Formatting.Indented);
 
-            File.WriteAllText(path, json); 
+            File.SetAttributes(path, FileAttributes.Normal);
+            File.WriteAllText(path, json);
+            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Hidden);
+
             TemplatesToList();
         }
         private void listbox_SelectedIndexChanged(object sender, EventArgs e)
@@ -354,7 +358,10 @@ namespace Spotistat
 
             string json = JsonConvert.SerializeObject(templates, Formatting.Indented);
 
+            File.SetAttributes(path, FileAttributes.Normal);
             File.WriteAllText(path, json);
+            File.SetAttributes(path, FileAttributes.ReadOnly | FileAttributes.Hidden);
+
             TemplatesToList();
         }
         public class User
