@@ -6,6 +6,9 @@ It's a simple program that shows info about Spotify artist:
 - albums
 - last album
 - last single
+### Program preview:
+
+![Spotistat](https://user-images.githubusercontent.com/60846759/162800172-4868fb68-ebc9-409d-a865-45dd8a906eec.png)
 ## How to use it?
 You can use the release version right away, but if you want to run this program via Visual Studio, you have to set the value of "base64".\
 Where and how to get it? 
