@@ -19,4 +19,4 @@ Where and how to get it?
 4) Connect them with ":" like this: client_id:client_secret
 5) Encode this string to base4 format [here](https://www.base64encode.org/)
 ## Credits
-Many thanks to [EneRgy_GOD](https://github.com/EneRgyGOD) who helped me with some things!💚
+Many thanks to [PPLaSMaXX](https://github.com/PPLaSMaXX) who helped me with some things!💚
