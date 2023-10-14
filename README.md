@@ -20,3 +20,5 @@ Where and how to get it?
 5) Encode this string to base4 format [here](https://www.base64encode.org/)
 ## Credits
 Many thanks to [PPLaSMaXX](https://github.com/PPLaSMaXX) who helped me with some things!💚
+
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-personal-page.svg)](https://stand-with-ukraine.pp.ua)
